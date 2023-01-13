@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SearchParamsOption } from "ky";
 import { ProductsApi } from "../api/products.api";
-import { ProductsType } from "./products.state";
+import { ProductsState } from "./products.state";
 
 const DEFAULT_SEARCH_PARAMS: SearchParamsOption = {
   page: 1,
@@ -9,7 +9,7 @@ const DEFAULT_SEARCH_PARAMS: SearchParamsOption = {
 };
 
 export const ProductsAction = {
-  get: createAsyncThunk<ProductsType.Base, SearchParamsOption>(
+  get: createAsyncThunk<ProductsState.Base, SearchParamsOption>(
     "products/get",
     async (searchParams = DEFAULT_SEARCH_PARAMS) =>
       await ProductsApi.get(searchParams)

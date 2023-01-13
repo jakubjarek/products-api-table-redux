@@ -1,8 +1,8 @@
-import { ProductsType } from "../store/products.state";
+import { ProductsState } from "../store/products.state";
 import { Data } from "./dto";
 
 export const ProductsMapper = {
-  get: (data: Data): ProductsType.Base => {
+  get: (data: Data): ProductsState.Base => {
     const pagination = {
       page: data.page,
       per_page: data.per_page,
