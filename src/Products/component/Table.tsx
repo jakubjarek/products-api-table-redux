@@ -8,14 +8,16 @@ import {
   Paper,
 } from "@mui/material";
 import useEmptyRows from "../hooks/useEmptyRows";
+import useMountedSearchParams from "../hooks/useMountedSearchParams";
 import itemsSelector from "../store/items/items.selector";
 import FilterInput from "./FilterInput";
 import Pagination from "./Pagination";
 
 function ProductsTable() {
   const items = itemsSelector.list.hook();
-
   const emptyRows = useEmptyRows();
+
+  useMountedSearchParams();
 
   if (items.length < 1) {
     return <h1>loading...</h1>;
