@@ -8,10 +8,17 @@ const DEFAULT_SEARCH_PARAMS: SearchParamsOption = {
   per_page: 5,
 };
 
+const PER_PAGE = 5;
+
 export const ProductsAction = {
-  get: createAsyncThunk<ProductsState.Base, SearchParamsOption>(
+  get: createAsyncThunk<ProductsState.Get, SearchParamsOption>(
     "products/get",
     async (searchParams = DEFAULT_SEARCH_PARAMS) =>
       await ProductsApi.get(searchParams)
+  ),
+
+  getByPage: createAsyncThunk<ProductsState.Get, string>(
+    "products/getByPage",
+    async (page) => await ProductsApi.get({ page, per_page: PER_PAGE })
   ),
 };

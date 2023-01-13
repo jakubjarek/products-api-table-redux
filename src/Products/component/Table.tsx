@@ -20,7 +20,7 @@ function ProductsTable() {
   useMountedSearchParams();
 
   if (items.length < 1) {
-    return <h1>loading...</h1>;
+    return <h1>loading... ⏰</h1>;
   }
 
   return (
@@ -38,7 +38,7 @@ function ProductsTable() {
           <TableBody>
             {items &&
               items.map(({ id, color, name, year }) => (
-                <TableRow key={id} sx={{ backgroundColor: color }}>
+                <TableRow key={id} style={{ backgroundColor: color }}>
                   <TableCell sx={{ width: "30%" }} component="th" scope="row">
                     {id}
                   </TableCell>

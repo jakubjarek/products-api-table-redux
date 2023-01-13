@@ -21,11 +21,6 @@ export default function useMountedSearchParams() {
       return;
     }
 
-    dispatch(
-      ProductsAction.get({
-        page: pageSearchParam,
-        per_page: 5,
-      } as SearchParamsOption)
-    );
+    dispatch(ProductsAction.getByPage(pageSearchParam));
   }, []);
 }

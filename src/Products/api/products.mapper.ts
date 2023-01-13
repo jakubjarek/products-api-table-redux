@@ -2,7 +2,7 @@ import { ProductsState } from "../store/products.state";
 import { Data } from "./dto";
 
 export const ProductsMapper = {
-  get: (data: Data): ProductsState.Base => {
+  get: (data: Data): ProductsState.Get => {
     const pagination = {
       page: data.page,
       per_page: data.per_page,

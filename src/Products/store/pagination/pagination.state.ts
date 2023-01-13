@@ -1,5 +1,5 @@
 export declare namespace PaginationState {
-  export interface Base {
+  export interface Get {
     page: number;
     per_page: number;
     total: number;
