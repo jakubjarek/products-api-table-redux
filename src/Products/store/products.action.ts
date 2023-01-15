@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SearchParamsOption } from "ky";
+import { Options, SearchParamsOption } from "ky";
 import { ProductsApi } from "../api/products.api";
 import { ProductsState } from "./products.state";
 
@@ -14,11 +14,18 @@ export const ProductsAction = {
   get: createAsyncThunk<ProductsState.Get, SearchParamsOption>(
     "products/get",
     async (searchParams = DEFAULT_SEARCH_PARAMS) =>
-      await ProductsApi.get(searchParams)
+      await ProductsApi.get({ searchParams })
   ),
 
-  getByPage: createAsyncThunk<ProductsState.Get, string>(
+  getByPage: createAsyncThunk<
+    ProductsState.Get,
+    { page: string; options?: Options }
+  >(
     "products/getByPage",
-    async (page) => await ProductsApi.get({ page, per_page: PER_PAGE })
+    async ({ page, options }) =>
+      await ProductsApi.get({
+        searchParams: { page: page, per_page: PER_PAGE },
+        ...options,
+      })
   ),
 };

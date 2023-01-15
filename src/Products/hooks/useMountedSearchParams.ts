@@ -14,13 +14,26 @@ export default function useMountedSearchParams() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const pageSearchParam = searchParams.get("page");
+    const abortControler = new AbortController();
 
-    if (!pageSearchParam) {
+    const page = searchParams.get("page");
+
+    if (!page) {
       setSearchParams(DEFAULT_PARAMS, { replace: true });
       return;
     }
 
-    dispatch(ProductsAction.getByPage(pageSearchParam));
+    dispatch(
+      ProductsAction.getByPage({
+        page: page,
+        options: {
+          signal: abortControler.signal,
+        },
+      })
+    );
+
+    return () => {
+      abortControler.abort();
+    };
   }, []);
 }

@@ -1,4 +1,4 @@
-import ky, { SearchParamsOption } from "ky";
+import ky, { Options, SearchParamsOption } from "ky";
 import { ProductsState } from "../store/products.state";
 import { ProductsMapper } from "./products.mapper";
 import { Data } from "./dto";
@@ -6,11 +6,11 @@ import { Data } from "./dto";
 const BASE_URL = "https://reqres.in/api/products";
 
 export const ProductsApi = {
-  get: async (searchParams: SearchParamsOption): Promise<ProductsState.Get> => {
+  get: async (options?: Options): Promise<ProductsState.Get> => {
     try {
       const data: Data = await ky
         .get(BASE_URL, {
-          searchParams,
+          ...options,
         })
         .json();
 

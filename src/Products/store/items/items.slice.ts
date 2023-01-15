@@ -10,7 +10,7 @@ export const items = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
-      ProductsAction.get.fulfilled,
+      ProductsAction.getByPage.fulfilled,
       (_, action) => action.payload.list
     );
   },

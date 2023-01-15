@@ -12,7 +12,7 @@ export const pagination = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(
-      ProductsAction.get.fulfilled,
+      ProductsAction.getByPage.fulfilled,
       (_, action) => action.payload.pagination
     );
   },

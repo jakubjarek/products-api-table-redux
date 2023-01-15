@@ -7,7 +7,9 @@ function* onLocationChange() {
   const parsedParams = queryString.parse(location.search);
 
   if (parsedParams.page) {
-    yield put<any>(ProductsAction.getByPage(parsedParams.page as string));
+    yield put<any>(
+      ProductsAction.getByPage({ page: parsedParams.page as string })
+    );
   }
 }
 
