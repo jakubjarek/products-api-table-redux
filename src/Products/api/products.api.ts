@@ -1,4 +1,4 @@
-import ky, { Options, SearchParamsOption } from "ky";
+import ky, { Options } from "ky";
 import { ProductsState } from "../store/products.state";
 import { ProductsMapper } from "./products.mapper";
 import { Data } from "./dto";

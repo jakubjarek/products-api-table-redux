@@ -9,12 +9,12 @@ import {
 } from "@mui/material";
 import useEmptyRows from "../hooks/useEmptyRows";
 import useMountedSearchParams from "../hooks/useMountedSearchParams";
-import itemsSelector from "../store/items/items.selector";
+import { useItemsSelector } from "../store/items/items.selector";
 import FilterInput from "./FilterInput";
 import Pagination from "./Pagination";
 
 function ProductsTable() {
-  const items = itemsSelector.list.hook();
+  const items = useItemsSelector("list");
   const emptyRows = useEmptyRows();
 
   useMountedSearchParams();

@@ -2,7 +2,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import productsSelector from "../products.selector";
 
-const selector = {
+export const itemsSelector = {
   list: createSelector(productsSelector.get, (p) => p.items),
 
   single: (id: number) =>
@@ -11,14 +11,8 @@ const selector = {
     ),
 };
 
-export default {
-  list: {
-    selector: selector.list,
-    hook: () => useSelector(selector.list),
-  },
+export type SelectorKeys = keyof typeof itemsSelector;
 
-  single: {
-    selector: (id: number) => selector.single(id),
-    hook: (id: number) => () => useSelector(selector.single(id)),
-  },
-};
+export function useItemsSelector(key: SelectorKeys) {
+  return useSelector(itemsSelector[key])
+}
