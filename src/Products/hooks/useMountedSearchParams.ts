@@ -1,4 +1,3 @@
-import { SearchParamsOption } from "ky";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
@@ -15,7 +14,6 @@ export default function useMountedSearchParams() {
 
   useEffect(() => {
     const abortControler = new AbortController();
-
     const page = searchParams.get("page");
 
     if (!page) {

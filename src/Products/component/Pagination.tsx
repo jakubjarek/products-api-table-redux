@@ -1,11 +1,11 @@
 import TableRow from "@mui/material/TableRow";
 import { TableFooter, TablePagination } from "@mui/material";
-import paginationSelector from "../store/pagination/pagination.selector";
 import { useSearchParams } from "react-router-dom";
+import { PaginationSelectorHooks } from "../store/pagination/pagination.slice";
 
 function Pagination() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const pagination = paginationSelector.base.hook();
+  const pagination = PaginationSelectorHooks.useGetAll();
 
   const handlePageChange = (event: any, newPage: number) => {
     setSearchParams((prev) => ({ ...prev, page: newPage + 1 }));

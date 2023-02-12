@@ -7,17 +7,19 @@ import {
   Table,
   Paper,
 } from "@mui/material";
-import useEmptyRows from "../hooks/useEmptyRows";
 import useMountedSearchParams from "../hooks/useMountedSearchParams";
-import itemsSelector from "../store/items/items.selector";
+import { ItemsSelectorHooks } from "../store/items/items.slice";
+import { EmptyTableRowsFallback } from "./EmptyRows";
 import FilterInput from "./FilterInput";
 import Pagination from "./Pagination";
 
-function ProductsTable() {
-  const items = itemsSelector.list.hook();
-  const emptyRows = useEmptyRows();
+const ROW_HEIGHT = 53;
+const ITEMS_PER_PAGE = 5;
 
-  useMountedSearchParams();
+function ProductsTable() {
+  const items = ItemsSelectorHooks.useGetAll();
+
+  void useMountedSearchParams();
 
   if (items.length < 1) {
     return <h1>loading... ⏰</h1>;
@@ -28,6 +30,7 @@ function ProductsTable() {
       <FilterInput />
       <TableContainer component="div">
         <Table>
+          {/* head */}
           <TableHead>
             <TableRow>
               <TableCell>id</TableCell>
@@ -35,6 +38,7 @@ function ProductsTable() {
               <TableCell align="right">year</TableCell>
             </TableRow>
           </TableHead>
+          {/* body */}
           <TableBody>
             {items &&
               items.map(({ id, color, name, year }) => (
@@ -50,8 +54,13 @@ function ProductsTable() {
                   </TableCell>
                 </TableRow>
               ))}
-            {emptyRows}
+            <EmptyTableRowsFallback
+              items={items}
+              rowHeight={ROW_HEIGHT}
+              itemsPerPage={ITEMS_PER_PAGE}
+            />
           </TableBody>
+          {/* pagination */}
           <Pagination />
         </Table>
       </TableContainer>

@@ -1,14 +1,14 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { Pagination } from "../../model/products.model";
 import { ProductsAction } from "../products.action";
-import { PaginationState } from "./pagination.state";
-
-const initialState = {} as PaginationState.Get;
+import productsSelector from "../products.selector";
 
 export const pagination = createSlice({
   name: "pagination",
-  initialState: initialState,
+  initialState: {} as Pagination,
   reducers: {
-    set: (_, action: PayloadAction<PaginationState.Get>) => action.payload,
+    update: (_, action: PayloadAction<Pagination>) => action.payload,
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -17,3 +17,15 @@ export const pagination = createSlice({
     );
   },
 });
+
+export const PaginationAction = pagination.actions;
+
+export class PaginationSelector {
+  private static moduleSelector = productsSelector.get;
+
+  static getAll = createSelector(this.moduleSelector, (s) => s.pagination);
+}
+
+export class PaginationSelectorHooks {
+  static useGetAll = () => useSelector(PaginationSelector.getAll);
+}

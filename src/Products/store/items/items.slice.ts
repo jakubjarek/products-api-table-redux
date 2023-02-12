@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { Item } from "../../model/products.model";
 import { ProductsAction } from "../products.action";
-import { ItemsState } from "./items.state";
-
-const initialState = [] as ItemsState.List;
+import productsSelector from "../products.selector";
 
 export const items = createSlice({
   name: "items",
-  initialState,
+  initialState: [] as Array<Item>,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
@@ -15,3 +15,13 @@ export const items = createSlice({
     );
   },
 });
+
+export class ItemsSelector {
+  private static moduleSelector = productsSelector.get;
+
+  static getAll = createSelector(this.moduleSelector, (s) => s.items);
+}
+
+export class ItemsSelectorHooks {
+  static useGetAll = () => useSelector(ItemsSelector.getAll);
+}
