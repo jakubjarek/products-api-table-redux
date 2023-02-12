@@ -1,8 +1,8 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
+import { RootState } from "../../../App/store";
 import { Item } from "../../model/products.model";
 import { ProductsAction } from "../products.action";
-import productsSelector from "../products.selector";
 
 export const items = createSlice({
   name: "items",
@@ -17,9 +17,9 @@ export const items = createSlice({
 });
 
 export class ItemsSelector {
-  private static moduleSelector = productsSelector.get;
+  private static getDomain = (state: RootState) => state.products;
 
-  static getAll = createSelector(this.moduleSelector, (s) => s.items);
+  static getAll = createSelector(this.getDomain, (s) => s.items);
 }
 
 export class ItemsSelectorHooks {

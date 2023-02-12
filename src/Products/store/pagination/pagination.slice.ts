@@ -1,8 +1,8 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
+import { RootState } from "../../../App/store";
 import { Pagination } from "../../model/products.model";
 import { ProductsAction } from "../products.action";
-import productsSelector from "../products.selector";
 
 export const pagination = createSlice({
   name: "pagination",
@@ -21,9 +21,9 @@ export const pagination = createSlice({
 export const PaginationAction = pagination.actions;
 
 export class PaginationSelector {
-  private static moduleSelector = productsSelector.get;
+  private static getDomain = (state: RootState) => state.products;
 
-  static getAll = createSelector(this.moduleSelector, (s) => s.pagination);
+  static getAll = createSelector(this.getDomain, (s) => s.pagination);
 }
 
 export class PaginationSelectorHooks {
