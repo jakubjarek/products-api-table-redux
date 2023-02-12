@@ -1,11 +1,7 @@
 import ProductsTable from "../Products/component/Table";
 
 function App() {
-  return (
-    <>
-      <ProductsTable />
-    </>
-  );
+  return <ProductsTable />;
 }
 
 export default App;
