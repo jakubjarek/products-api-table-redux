@@ -7,8 +7,11 @@ import {
   Table,
   Paper,
 } from "@mui/material";
-import useMountedSearchParams from "../hooks/useMountedSearchParams";
-import { ItemsSelectorHooks } from "../store/items/items.slice";
+import { createAction } from "@reduxjs/toolkit";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../App/store";
+import { ItemsSelectorHook } from "../store/items/items.slice";
 import { EmptyTableRowsFallback } from "./EmptyRows";
 import FilterInput from "./FilterInput";
 import Pagination from "./Pagination";
@@ -16,10 +19,16 @@ import Pagination from "./Pagination";
 const ROW_HEIGHT = 53;
 const ITEMS_PER_PAGE = 5;
 
-function ProductsTable() {
-  const items = ItemsSelectorHooks.useGetAll();
+export const TABLE_MOUNTED = "TABLE_MOUNTED";
+export const tableMounted = createAction(TABLE_MOUNTED);
 
-  void useMountedSearchParams();
+function ProductsTable() {
+  const dispatch: AppDispatch = useDispatch();
+  const items = ItemsSelectorHook.useGetAll();
+
+  useEffect(() => {
+    dispatch(tableMounted());
+  }, []);
 
   if (items.length < 1) {
     return <h1>loading... ⏰</h1>;

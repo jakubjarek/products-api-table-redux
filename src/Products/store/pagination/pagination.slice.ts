@@ -1,14 +1,15 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../App/store";
-import { Pagination } from "../../model/products.model";
+import { ProductsModel } from "../../model/products.model";
 import { ProductsAction } from "../products.action";
 
 export const pagination = createSlice({
   name: "pagination",
-  initialState: {} as Pagination,
+  initialState: {} as ProductsModel.Pagination,
   reducers: {
-    update: (_, action: PayloadAction<Pagination>) => action.payload,
+    update: (_, action: PayloadAction<ProductsModel.Pagination>) =>
+      action.payload,
   },
   extraReducers: (builder) => {
     builder.addCase(

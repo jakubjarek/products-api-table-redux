@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { Options, SearchParamsOption } from "ky";
 import { ProductsModel } from "../model/products.model";
 import { ProductsService } from "../service/products.service";
@@ -11,14 +11,16 @@ const DEFAULT_SEARCH_PARAMS: SearchParamsOption = {
 const PER_PAGE = 5;
 
 export class ProductsAction {
-  static get = createAsyncThunk<ProductsModel, SearchParamsOption>(
+  static debouncedGet = createAction<string>("products/debouncedGet");
+
+  static get = createAsyncThunk<ProductsModel.Base, SearchParamsOption>(
     "products/get",
     async (searchParams = DEFAULT_SEARCH_PARAMS) =>
       await ProductsService.get({ searchParams })
   );
 
   static getByPage = createAsyncThunk<
-    ProductsModel,
+    ProductsModel.Base,
     { page: string; options?: Options }
   >(
     "products/getByPage",
@@ -26,6 +28,14 @@ export class ProductsAction {
       await ProductsService.get({
         searchParams: { page: page, per_page: PER_PAGE },
         ...options,
+      })
+  );
+
+  static getById = createAsyncThunk<ProductsModel.Single, number>(
+    "products/getById",
+    async (id) =>
+      await ProductsService.getSingle({
+        searchParams: { id },
       })
   );
 }
