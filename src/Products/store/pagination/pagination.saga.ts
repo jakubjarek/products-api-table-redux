@@ -2,7 +2,14 @@ import {
   replace,
   ROUTER_ON_LOCATION_CHANGED,
 } from "@lagunovsky/redux-react-router";
-import { call, debounce, put, take, takeLatest } from "redux-saga/effects";
+import {
+  call,
+  debounce,
+  fork,
+  put,
+  take,
+  takeLatest,
+} from "redux-saga/effects";
 import queryString from "query-string";
 import { ProductsAction } from "../products.action";
 import { TABLE_MOUNTED } from "../../component/Table";
@@ -63,6 +70,15 @@ function* onSearchSaga(action: PayloadAction<string>) {
   }
 
   if (action.payload) {
+    yield fork(
+      () =>
+        new Promise(() =>
+          setTimeout(() => {
+            alert("non blocking async action");
+          }, 1000)
+        )
+    );
+
     yield put<any>(ProductsAction.getById(+action.payload));
     yield put<any>(
       PaginationAction.update({
